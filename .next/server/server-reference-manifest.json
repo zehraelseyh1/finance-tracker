@@ -1,0 +1,22 @@
+{
+  "node": {
+    "faa48711128c0ebfd9ec8eca0d19825154c35083": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CZehra%5C%5CDocuments%5C%5CVisual%20Studio%202022%5C%5Cfinance%20tracker%5C%5Csrc%5C%5Capp%5C%5Caction.ts%22%2C%5B%22addTransaction%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "bfef56c18b32075be28c49955c47d75a670c993c": {
+      "workers": {
+        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CZehra%5C%5CDocuments%5C%5CVisual%20Studio%202022%5C%5Cfinance%20tracker%5C%5Cnode_modules%5C%5C%40clerk%5C%5Cnextjs%5C%5Cdist%5C%5Cesm%5C%5Capp-router%5C%5Cserver-actions.js%22%2C%5B%22invalidateCacheAction%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "znoV5YFKoCMjoYcfBOqpq2kRL1/h1s6yd6dws8CaKeI="
+}

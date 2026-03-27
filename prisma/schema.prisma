@@ -1,0 +1,22 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Session pooler (5432) for migrate/db push — transaction pooler (6543) breaks prepared statements
+  directUrl = env("DIRECT_URL")
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String   // Clerk'ten gelen kullanıcı ID'si
+  text        String
+  amount      Float
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}

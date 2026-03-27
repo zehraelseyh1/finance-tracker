@@ -1,0 +1,59 @@
+import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { addTransaction } from "./action";
+import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
+
+export default async function Home() {
+  const { userId } = auth();
+  
+  // Kullanıcının harcamalarını veritabanından çek
+  const transactions = userId 
+    ? await db.transaction.findMany({ where: { userId }, orderBy: { createdAt: 'desc' } }) 
+    : [];
+
+  return (
+    <main className="max-w-md mx-auto p-6">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold text-slate-800">Finance Tracker</h1>
+        <UserButton />
+      </div>
+
+      <SignedIn>
+        {/* Harcama Ekleme Formu */}
+        <form action={addTransaction} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border">
+          <div className="mb-4">
+            <input name="text" placeholder="Harcama adı (örn: Kahve)" className="w-full p-2 border rounded" required />
+          </div>
+          <div className="mb-4">
+            <input name="amount" type="number" step="0.01" placeholder="Miktar (örn: 50.50)" className="w-full p-2 border rounded" required />
+          </div>
+          <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700">
+            Harcama Ekle
+          </button>
+        </form>
+
+        {/* Liste */}
+        <div className="space-y-2">
+          <h2 className="font-semibold text-slate-600">Geçmiş Harcamalar</h2>
+          {transactions.map((t) => (
+            <div key={t.id} className="flex justify-between p-3 bg-slate-50 border rounded shadow-sm">
+              <span>{t.text}</span>
+              <span className={t.amount < 0 ? "text-red-500" : "text-green-500"}>
+                {t.amount} TL
+              </span>
+            </div>
+          ))}
+        </div>
+      </SignedIn>
+
+      <SignedOut>
+        <div className="text-center py-20 bg-slate-100 rounded-lg">
+          <p className="mb-4 text-slate-600 font-medium">Devam etmek için giriş yapmalısın.</p>
+          <SignInButton mode="modal">
+            <button className="bg-indigo-600 text-white px-6 py-2 rounded-full font-bold">Giriş Yap/ Kayıt ol</button>
+          </SignInButton>
+        </div>
+      </SignedOut>
+    </main>
+  );
+}
