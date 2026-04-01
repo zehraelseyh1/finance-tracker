@@ -3,6 +3,18 @@ import { addTransaction } from "./action";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 
+
+const CATEGORIES = ["Yemek", "Ulaşım", "Fatura", "Eğlence", "Sağlık", "Diğer"];
+
+const CAT_COLORS: Record<string, string> = {
+  Yemek: "bg-orange-100 text-orange-700",
+  Ulaşım: "bg-blue-100 text-blue-700",
+  Fatura: "bg-yellow-100 text-yellow-700",
+  Eğlence: "bg-purple-100 text-purple-700",
+  Sağlık: "bg-green-100 text-green-700",
+  Diğer: "bg-slate-100 text-slate-600",
+};
+
 export default async function Home() {
   const { userId } = auth();
   

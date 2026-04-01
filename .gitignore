@@ -1,1 +1,4 @@
 node_modules
+
+# Prisma client (custom output; regenerated via `npx prisma generate`)
+src/generated/prisma

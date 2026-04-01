@@ -7,14 +7,16 @@ export async function addTransaction(formData: FormData) {
   const { userId } = auth();
   const text = formData.get("text") as string;
   const amount = formData.get("amount") as string;
+  const category = formData.get("categoryId") as string | null;
 
   if (!userId) throw new Error("Giriş yapmalısın!");
 
-  await db.transaction.create({
+  const transaction = await db.transaction.create({
     data: {
       text,
       amount: parseFloat(amount),
       userId,
+      category: category || "Diğer",
     },
   });
 

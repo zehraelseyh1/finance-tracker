@@ -2,6 +2,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -16,6 +17,8 @@ model Transaction {
   userId      String   // Clerk'ten gelen kullanıcı ID'si
   text        String
   amount      Float
+  type      String   @default("expense")
+  category  String   @default("Diğer")
   createdAt   DateTime @default(now())
 
   @@index([userId])
