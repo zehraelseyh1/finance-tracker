@@ -16,7 +16,7 @@ export async function addTransaction(formData: FormData) {
       text,
       amount: parseFloat(amount),
       userId,
-      category: category || "Diğer",
+      category: category || "Yemek",
     },
   });
 

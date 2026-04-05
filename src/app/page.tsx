@@ -39,6 +39,16 @@ export default async function Home() {
           <div className="mb-4">
             <input name="amount" type="number" step="0.01" placeholder="Miktar (örn: 50.50)" className="w-full p-2 border rounded" required />
           </div>
+           
+          <div className="mb-4">
+            <select name="categoryId" className="w-full p-2 border rounded">
+              <option value="">Kategori seç</option>
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+          
           <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700">
             Harcama Ekle
           </button>
@@ -47,14 +57,25 @@ export default async function Home() {
         {/* Liste */}
         <div className="space-y-2">
           <h2 className="font-semibold text-slate-600">Geçmiş Harcamalar</h2>
-          {transactions.map((t) => (
-            <div key={t.id} className="flex justify-between p-3 bg-slate-50 border rounded shadow-sm">
-              <span>{t.text}</span>
-              <span className={t.amount < 0 ? "text-red-500" : "text-green-500"}>
-                {t.amount} TL
+          
+          {transactions.map((t) => {
+           const colorClass = CAT_COLORS[t.category as keyof typeof CAT_COLORS] || CAT_COLORS["Diğer"];
+
+           return (
+            <div key={t.id} className="flex justify-between items-center p-3 bg-white border rounded shadow-sm mb-2">
+             <div>
+              <p className="font-bold text-slate-800">{t.text}</p>
+              {/* İşte burası renkleri getiren yer: */}
+              <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold ${colorClass}`}>
+               {t.category || "Ulaşım"}
               </span>
-            </div>
-          ))}
+             </div>
+             <span className={`font-bold ${t.amount < 0 ? "text-red-500" : "text-green-500"}`}>
+              {t.amount > 0 ? `+${t.amount}` : t.amount} TL
+             </span>
+           </div>
+           );
+       })}
         </div>
       </SignedIn>
 
