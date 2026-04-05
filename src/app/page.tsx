@@ -24,58 +24,93 @@ export default async function Home() {
     : [];
 
   return (
-    <main className="max-w-md mx-auto p-6">
-      <div className="flex justify-between items-center mb-8">
+    <main className="mx-auto flex h-screen max-w-6xl flex-col p-6">
+      <div className="mb-6 flex shrink-0 justify-between items-center">
         <h1 className="text-2xl font-bold text-slate-800">Finance Tracker</h1>
         <UserButton />
       </div>
 
       <SignedIn>
-        {/* Harcama Ekleme Formu */}
-        <form action={addTransaction} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border">
-          <div className="mb-4">
-            <input name="text" placeholder="Harcama adı (örn: Kahve)" className="w-full p-2 border rounded" required />
-          </div>
-          <div className="mb-4">
-            <input name="amount" type="number" step="0.01" placeholder="Miktar (örn: 50.50)" className="w-full p-2 border rounded" required />
-          </div>
-           
-          <div className="mb-4">
-            <select name="categoryId" className="w-full p-2 border rounded">
-              <option value="">Kategori seç</option>
-              {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
-          </div>
-          
-          <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700">
-            Harcama Ekle
-          </button>
-        </form>
+        <div className="flex min-h-0 flex-1 flex-col gap-6 md:flex-row">
+          {/* Sol: form, sayfa ile kaymaz */}
+          <div className="shrink-0 md:w-[min(100%,22rem)] md:overflow-hidden">
+            <form
+              action={addTransaction}
+              className="rounded border bg-white px-8 pt-6 pb-8 shadow-md"
+            >
+              <div className="mb-4">
+                <input
+                  name="text"
+                  placeholder="Harcama adı (örn: Kahve)"
+                  className="w-full rounded border p-2"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  name="amount"
+                  type="number"
+                  step="0.01"
+                  placeholder="Miktar (örn: 50.50)"
+                  className="w-full rounded border p-2"
+                  required
+                />
+              </div>
 
-        {/* Liste */}
-        <div className="space-y-2">
-          <h2 className="font-semibold text-slate-600">Geçmiş Harcamalar</h2>
-          
-          {transactions.map((t) => {
-           const colorClass = CAT_COLORS[t.category as keyof typeof CAT_COLORS] || CAT_COLORS["Diğer"];
+              <div className="mb-4">
+                <select name="categoryId" className="w-full rounded border p-2">
+                  <option value="">Kategori seç</option>
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-           return (
-            <div key={t.id} className="flex justify-between items-center p-3 bg-white border rounded shadow-sm mb-2">
-             <div>
-              <p className="font-bold text-slate-800">{t.text}</p>
-              {/* İşte burası renkleri getiren yer: */}
-              <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold ${colorClass}`}>
-               {t.category || "Ulaşım"}
-              </span>
-             </div>
-             <span className={`font-bold ${t.amount < 0 ? "text-red-500" : "text-green-500"}`}>
-              {t.amount > 0 ? `+${t.amount}` : t.amount} TL
-             </span>
-           </div>
-           );
-       })}
+              <button
+                type="submit"
+                className="w-full rounded bg-indigo-600 p-2 text-white hover:bg-indigo-700"
+              >
+                Harcama Ekle
+              </button>
+            </form>
+          </div>
+
+          {/* Sağ: geçmiş harcamalar, alan içinde kayar */}
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col md:overflow-hidden">
+            <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
+              <h2 className="sticky top-0 z-10 bg-white pb-2 font-semibold text-slate-600">
+                Geçmiş Harcamalar
+              </h2>
+
+              {transactions.map((t) => {
+                const colorClass =
+                  CAT_COLORS[t.category as keyof typeof CAT_COLORS] || CAT_COLORS["Diğer"];
+
+                return (
+                  <div
+                    key={t.id}
+                    className="flex items-center justify-between rounded border bg-white p-3 shadow-sm"
+                  >
+                    <div>
+                      <p className="font-bold text-slate-800">{t.text}</p>
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${colorClass}`}
+                      >
+                        {t.category || "Ulaşım"}
+                      </span>
+                    </div>
+                    <span
+                      className={`font-bold ${t.amount < 0 ? "text-red-500" : "text-green-500"}`}
+                    >
+                      {t.amount > 0 ? `+${t.amount}` : t.amount} TL
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </SignedIn>
 
