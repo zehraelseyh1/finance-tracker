@@ -31,4 +31,10 @@ export async function POST(request: Request) {
     console.error("API Hatası:", error);
     return NextResponse.json({ error: "Sunucu hatası oluştu." }, { status: 500 });
   }
+
+  const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
+  const symbol = "IBM"; // Örnek hisse senedi
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${API_KEY}`;
+
+// Bu URL'ye 'fetch' atarak veriyi alabilirsin
 }
