@@ -1,7 +1,8 @@
 import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { addTransaction } from "./action";
+import { addTransaction, deleteTransaction } from "./action";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
+import { Trash2 } from "lucide-react";
 
 
 const CATEGORIES = ["Yemek", "Ulaşım", "Fatura", "Eğlence", "Sağlık", "Diğer"];
@@ -89,24 +90,37 @@ export default async function Home() {
                   CAT_COLORS[t.category as keyof typeof CAT_COLORS] || CAT_COLORS["Diğer"];
 
                 return (
-                  <div
-                    key={t.id}
-                    className="flex items-center justify-between rounded border bg-white p-3 shadow-sm"
-                  >
-                    <div>
-                      <p className="font-bold text-slate-800">{t.text}</p>
+                  <details key={t.id} className="group relative rounded border bg-white shadow-sm">
+                    <summary className="flex cursor-pointer list-none items-center justify-between p-3 pr-12 marker:content-none">
+                      <div>
+                        <p className="font-bold text-slate-800">{t.text}</p>
+                        <span
+                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${colorClass}`}
+                        >
+                          {t.category || "Ulaşım"}
+                        </span>
+                      </div>
                       <span
-                        className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${colorClass}`}
+                        className={`font-bold transition-transform duration-300 ease-out group-open:-translate-x-8 ${t.amount < 0 ? "text-red-500" : "text-green-500"}`}
                       >
-                        {t.category || "Ulaşım"}
+                        {t.amount > 0 ? `+${t.amount}` : t.amount} TL
                       </span>
-                    </div>
-                    <span
-                      className={`font-bold ${t.amount < 0 ? "text-red-500" : "text-green-500"}`}
+                    </summary>
+
+                    <form
+                      action={deleteTransaction.bind(null, t.id)}
+                      className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 translate-x-2 opacity-0 transition-all duration-300 ease-out group-open:pointer-events-auto group-open:translate-x-0 group-open:opacity-100"
                     >
-                      {t.amount > 0 ? `+${t.amount}` : t.amount} TL
-                    </span>
-                  </div>
+                      <button
+                        type="submit"
+                        className="rounded p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                        aria-label="Harcamayı sil"
+                        title="Harcamayı sil"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </form>
+                  </details>
                 );
               })}
             </div>

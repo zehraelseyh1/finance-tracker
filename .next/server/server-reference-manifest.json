@@ -1,8 +1,16 @@
 {
   "node": {
+    "4f4ba455294637f4d2a440d422e7ff39739b0d5d": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CZehra%5C%5CDocuments%5C%5CGitHub%5C%5Cfinance-tracker%5C%5Csrc%5C%5Capp%5C%5Caction.ts%22%2C%5B%22deleteTransaction%22%2C%22addTransaction%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
     "f20fbb03c98c531d411611945e14f4e4e0daa6a2": {
       "workers": {
-        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CZehra%5C%5CDocuments%5C%5CGitHub%5C%5Cfinance-tracker%5C%5Csrc%5C%5Capp%5C%5Caction.ts%22%2C%5B%22addTransaction%22%5D%5D%5D&__client_imported__=!"
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CZehra%5C%5CDocuments%5C%5CGitHub%5C%5Cfinance-tracker%5C%5Csrc%5C%5Capp%5C%5Caction.ts%22%2C%5B%22deleteTransaction%22%2C%22addTransaction%22%5D%5D%5D&__client_imported__=!"
       },
       "layer": {
         "app/page": "rsc"
@@ -18,5 +26,5 @@
     }
   },
   "edge": {},
-  "encryptionKey": "0I1bAvCEPuTlXW6cdwaYdw6nNVq7awJiYn0tfwx5uTI="
+  "encryptionKey": "3LHN80pODOGtn/0z9s6DihtIHOCFeeUjXCeWIDijtdA="
 }

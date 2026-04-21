@@ -22,3 +22,22 @@ export async function addTransaction(formData: FormData) {
 
   revalidatePath("/"); // Sayfayı yenilemeden veriyi güncelle
 }
+
+export async function deleteTransaction(transactionId: string) {
+  const { userId } = auth();
+
+  if (!userId) throw new Error("Giriş yapmalısın!");
+
+  const result = await db.transaction.deleteMany({
+    where: {
+      id: transactionId,
+      userId,
+    },
+  });
+
+  if (result.count === 0) {
+    throw new Error("Silinecek harcama bulunamadı.");
+  }
+
+  revalidatePath("/");
+}
